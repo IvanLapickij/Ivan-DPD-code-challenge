@@ -1,0 +1,18 @@
+# 1. Add the MySQL driver to the server's common classpath FIRST.
+# This makes the driver's classes available for the next command.
+add-library --type common /opt/payara/new-libs/mysql-connector-j-9.0.0.jar
+
+# === JDBC Connection Pools ===
+create-jdbc-connection-pool --datasourceclassname=com.mysql.cj.jdbc.MysqlDataSource --restype=javax.sql.DataSource --maxpoolsize 4 --steadypoolsize 2 --idletimeout 20 --leaktimeout 10 --leakreclaim true --statementleaktimeout 10 --statementleakreclaim true --isconnectvalidatereq true --validationmethod custom-validation --validationclassname org.glassfish.api.jdbc.validation.DefaultConnectionValidation --property zeroDateTimeBehavior=CONVERT_TO_NULL:dontTrackOpenResources=true:password=taskpassword:PortNumber=3306:databaseName=taskdb:UseSSL=true:logger=com.mysql.cj.log.StandardLogger:allowPublicKeyRetrieval=true:serverName=db:user=taskuser:autoSlowLog=true:logSlowQueries=true:fallbackToSystemKeyStore=false:verifyServerCertificate=false:requireSSL=true MySqlTaskPool
+
+# === JDBC Resources ===
+create-jdbc-resource --connectionpoolid=MySqlTaskPool TaskDB
+
+# === Monitoring ===
+set server-config.monitoring-service.module-monitoring-levels.jdbc-connection-pool=HIGH
+
+# Connector Connection Pools
+create-connector-connection-pool --raname=jmsra --connectiondefinition=javax.jms.ConnectionFactory --steadypoolsize=1 --maxpoolsize=250 jms/__defaultConnectionFactory-Connection-Pool
+
+# Connector Resources (depend on Connector Pools)
+create-connector-resource --poolname=jms/__defaultConnectionFactory-Connection-Pool jms/__defaultConnectionFactory

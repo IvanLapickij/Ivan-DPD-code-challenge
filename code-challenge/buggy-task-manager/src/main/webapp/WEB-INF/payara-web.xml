@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE payara-web-app PUBLIC "-//Payara.fish//DTD Payara Server 5 Servlet 4.0//EN" "https://docs.payara.fish/docs/5.2021.10/schemas/payara-web-app_5_0.dtd">
+<payara-web-app>
+    <context-root>/task-manager</context-root>
+</payara-web-app>

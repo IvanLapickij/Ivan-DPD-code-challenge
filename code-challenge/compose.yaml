@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  db:
+    image: mysql:8.0
+    container_name: task-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: taskdb
+      MYSQL_USER: taskuser
+      MYSQL_PASSWORD: taskpassword
+    volumes:
+      # This runs the init script on first start to create the schema and data
+      - ./code-challenge/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Payara Application Server Service
+  app:
+    image: payara/server-full:6.2024.5-jdk21
+    container_name: task-app
+    ports:
+      - "8199:8080"  # HTTP port for the application
+      - "4899:4848"  # Admin console port
+    volumes:
+      # Mounts the compiled .war file directly into Payara's autodeploy folder
+      - ./code-challenge/buggy-task-manager/target/buggy-task-manager.war:/opt/payara/deployments/app.war
+      # Mounts the setup script to be executed      
+      - ./code-challenge/lib/mysql-connector-j-9.0.0.jar:/opt/payara/new-libs/mysql-connector-j-9.0.0.jar
+      - ./code-challenge/asadmin/post-boot-commands.asadmin:/opt/payara/config/post-boot-commands.asadmin      
+    depends_on:
+      db:
+        condition: service_healthy # Waits for MySQL to be ready    
