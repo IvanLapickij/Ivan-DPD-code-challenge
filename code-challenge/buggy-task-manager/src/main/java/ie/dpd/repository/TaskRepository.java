@@ -1,9 +1,5 @@
 package ie.dpd.repository;
 
-import ie.dpd.model.Task;
-import jakarta.annotation.Resource;
-import jakarta.enterprise.context.ApplicationScoped;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.sql.DataSource;
+
+import ie.dpd.model.Task;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class TaskRepository {
@@ -60,7 +62,8 @@ public class TaskRepository {
             while (rs.next()) {
                 Long currentId = rs.getLong("id");
 
-                if (currentId == id) {
+                //if (currentId == id) {
+                if(currentId.equals(id)){
                     foundTask = new Task();
                     foundTask.setId(currentId);
                     foundTask.setTitle(rs.getString("title"));
