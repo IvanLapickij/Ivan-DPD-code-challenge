@@ -1,5 +1,8 @@
 package ie.dpd.resource;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import ie.dpd.model.Task;
 import ie.dpd.repository.TaskRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -10,8 +13,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.sql.SQLException;
-import java.util.List;
 
 @Path("/tasks")
 @RequestScoped

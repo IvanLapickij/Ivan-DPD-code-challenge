@@ -60,3 +60,23 @@ INSERT INTO tasks (title, description, completed)
 VALUES ('Finish milestone 1', 'Finalize and review deliverables.', TRUE);
 
 
+
+#Summaries table
+DROP TABLE IF EXISTS task_summaries;
+CREATE TABLE task_summaries (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    completed_count BIGINT NOT NULL,
+    pending_count  BIGINT NOT NULL,
+    total_tasks    BIGINT NOT NULL,
+    generated_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+#quick manual test:
+INSERT INTO task_summaries (completed_count, pending_count, total_tasks)
+SELECT
+  COALESCE(SUM(CASE WHEN completed THEN 1 ELSE 0 END),0) AS completed_count,
+  COALESCE(SUM(CASE WHEN completed THEN 0 ELSE 1 END),0) AS pending_count,
+  COUNT(*) AS total_tasks
+FROM tasks;
+
+SELECT * FROM task_summaries ORDER BY id DESC LIMIT 1;
