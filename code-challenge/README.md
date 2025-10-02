@@ -13,17 +13,17 @@ fix the bugs and implement the new feature.
 ## Step 1: Project Setup
 --------------------------------------------------------------------------------
 
-1.  **Prerequisites:** Ensure you have Docker, Java 21, and Maven installed on your machine.
+1.  **Prerequisites:**✅ Ensure you have Docker, Java 21, and Maven installed on your machine.
 
-2.  **Build the Project:** Open a terminal in the project's root directory and run the
+2.  **Build the Project:** ✅Open a terminal in the project's root directory and run the
     following Maven command to build the application:
     mvn clean install
 
-3.  **Start the Environment:** Use Docker Compose to start the Payara application
+3.  **Start the Environment:**✅ Use Docker Compose to start the Payara application
     server and the MySQL database.
     docker-compose up
 
-    This will start the application, which will be accessible at:
+    This will start the application, which will be accessible at:❌
     http://localhost:8199/task-manager/api/
 
 --------------------------------------------------------------------------------
