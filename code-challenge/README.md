@@ -46,10 +46,16 @@ failure is "silent" to the API consumer.
 3.  Fix the bug.
 
 **How to Reproduce:**
+
 - Make a GET request to an endpoint that fetches a single task with a long title,
   for example: `http://localhost:8199/task-manager/api/tasks/11`
 - Check the `audit_log` table in the `taskdb` database. It will be empty.
-- Check the logs of the `task-app` container for error messages (`docker logs task-app`).
+- Check the logs of the `task-app` container for error messages (`docker logs task-app`). 
+
+# ❌ #wasnt able to reproduce
+# ❌didnt found anything interesting in logs , probably due to endpoint 404.
+# ✅In DB created trigger function & adjusted action_details limit.
+
 
 --------------------------------------------------------------------------------
 ## Step 3: Task 2 - Troubleshoot the "Incorrect Data" Bug
@@ -70,7 +76,7 @@ when you request a task with a larger ID (e.g., 130), the API returns a
 **How to Reproduce:**
 - Request a task with a low ID: `GET http://localhost:8199/task-manager/api/tasks/9` (This will work).
 - Request a task with a high ID: `GET http://localhost:8199/task-manager/api/tasks/130` (This will fail with a 404).
-
+# ❌ #wasnt able to reproduce
 --------------------------------------------------------------------------------
 ## Step 4: Task 3 - Implement a New Feature
 --------------------------------------------------------------------------------
